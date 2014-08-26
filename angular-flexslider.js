@@ -61,7 +61,7 @@
               return slideItem;
             };
             return $scope.$watchCollection(collectionString, function(collection) {
-              var attrKey, attrVal, c, currentSlidesLength, e, i, idx, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
+              var attrKey, attrVal, parsedAttrValue, c, currentSlidesLength, e, i, idx, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
 
               if (!(collection != null ? collection.length : void 0)) {
                 return;
@@ -167,6 +167,15 @@
                     };
                   })(attrVal);
                   continue;
+                }
+                try {
+                  parsedAttrValue = $parse(attrVal)($scope);
+
+                  if (parsedAttrValue) {
+                    options[attrKey] = parsedAttrValue;
+                    continue;
+                  }
+                } catch (exceptionParse) {
                 }
                 options[attrKey] = attrVal;
               }
